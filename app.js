@@ -6,7 +6,7 @@ var bodyParser = require("body-parser");
 
 // EXPRESS CONFIG
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extendend: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // VARIABLES
 var campgrounds = [
@@ -34,16 +34,16 @@ app.get("/campgrounds", (req, res) => {
   res.render("campgrounds", { campgrounds: campgrounds });
 });
 
-app.get("/campgrounds/new", (req, res) => {
-  res.render("new");
-});
-
 app.post("/campgrounds", (req, res) => {
   var name = req.body.name;
   var image = req.body.image;
   var newCamp = { name: name, image: image };
   campgrounds.push(newCamp);
   res.redirect("/campgrounds");
+});
+
+app.get("/campgrounds/new", (req, res) => {
+  res.render("new");
 });
 
 // 404 ROUTE
