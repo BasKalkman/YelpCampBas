@@ -4,37 +4,28 @@ var app = express();
 var ejs = require("ejs");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var methodOverride = require("method-override");
+var expressSanitizer = require("express-sanitizer");
+var seedDB = require("./seeds");
+
+// MODELS
+var Campground = require("./models/campground");
+var Comment = require("./models/comment");
 
 // EXPRESS CONFIG
 app.set("view engine", "ejs");
+app.set(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.use(expressSanitizer());
 
 // MONGOOSE
-mongoose.connect("mongodb://localhost/yelp_camp");
-// Schema
-var campgroundSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
+mongoose.connect(
+  "mongodb://localhost/yelp_camp",
+  { useNewUrlParser: true }
+);
 
-var Campground = mongoose.model("Campground", campgroundSchema);
-
-// Campground.create(
-//   {
-//     name: "Groningen",
-//     image:
-//       "https://www.photosforclass.com/download/pixabay-1163419?webUrl=https%3A%2F%2Fpixabay.com%2Fget%2Fe834b70c2cf5083ed1584d05fb1d4e97e07ee3d21cac104496f7c37daeecb3ba_960.jpg&user=Brahmsee",
-//     description: "Nice campground in the north of the Netherlands"
-//   },
-//   function(err, newCampground) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log(newCampground);
-//     }
-//   }
-// );
+seedDB();
 
 // HOME
 app.get("/", (req, res) => {

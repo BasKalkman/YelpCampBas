@@ -1,11 +1,15 @@
 <% include partials/header %>
 
-<h1><%= camp.name %></h1>
+<div class="container-fluid">
 
-<img src="<%= camp.image %>" style="height: 200px; width: auto" />
+  <h1><%= camp.name %></h1>
 
-<p>
-  <%= camp.description %>
-</p> 
+  <img src="<%= camp.image %>" style="height: 200px; width: auto" />
+
+  <p>
+    <%= camp.description %>
+  </p> 
+
+</div>
 
 <% include partials/footer %>
